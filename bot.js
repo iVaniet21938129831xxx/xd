@@ -122,37 +122,6 @@ client.on('ready', async => {
     
 });
 
-//cmddd BroadcastBeta. =betabc
-client.on('message', message => {
-        
-    if (message.author.id === client.user.id) return;
-    if (message.guild) {
-   let embed = new Discord.RichEmbed()
-    let args = message.content.split(' ').slice(1).join(' ');
-if(message.content.split(' ')[0] == prefix + 'betabc') {
-    if (!args[1]) {
-message.channel.send(`**ملحوظة، يمكنك ارسال صورة الآن مع البرودكاست... فقط ادرج الصورة كـ رسالة عادية مع الأمر :tada:**`);
-return;
-}
-        message.guild.members.forEach(m => {
-   if(!message.member.hasPermission('ADMINISTRATOR')) return;
-            var bc = new Discord.RichEmbed()
-            .setTitle('**✉ New Message. | .رسالة جديدة**')
-            .setThumbnail(`${message.guild.iconURL}`)
-            .addField('✯ السيرفر', `${message.guild.name}`)
-            .addField('✯ المرسل', `<@${message.author.id}>`)
-            .addField('✯ الرسالة', args)
-            .setFooter(`${client.user.username}`)
-            .setColor('RANDOM')
-            m.send(`${m}`,{embed: bc})
-    if(message.attachments.first()){
-m.sendFile(message.attachments.first().url).catch();
-}
-})
-}
-}
-});
-
 
 //cmddd Channels. =channels
 client.on('message', message => {
@@ -363,7 +332,6 @@ client.on('message', message => {
         fmt: 'json'
       }, function(err, res) {
         if (getValue("image_url", res)) {
-
           message.channel.send({files:[{
               attachment: getValue("image_url", res),
               name: 'gif'+sb+'.gif'
@@ -723,56 +691,6 @@ client.on('message', async message => {
           }
       });
 
-//cmddd Broadcast. =bc
-client.on('message', message => {
-    if(!message.channel.guild) return;
- if(message.content.startsWith(prefix + 'bc')) {
- if(!message.channel.guild) return message.channel.send('**هذا الأمر فقط للسيرفرات**').then(m => m.delete(5000));
- if(!message.member.hasPermission('ADMINISTRATOR')) return      message.channel.send('**للأسف لا تمتلك صلاحية** `ADMINISTRATOR`' );
- let args = message.content.split(" ").join(" ").slice(2 + prefix.length);
- let BcList = new Discord.RichEmbed()
- .setThumbnail(message.author.avatarURL)
- .setAuthor(`محتوى الرساله ${args}`)
- .setDescription(`برودكاست بـ امبد 📝\nبرودكاست بدون امبد✏ \nلديك دقيقه للأختيار قبل الغاء البرودكاست`)
- if (!args) return message.reply('**يجب عليك كتابة كلمة او جملة لإرسال البرودكاست**');message.channel.send(BcList).then(msg => {
- msg.react('📝')
- .then(() => msg.react('✏'))
- .then(() =>msg.react('📝'))
-  
- let EmbedBcFilter = (reaction, user) => reaction.emoji.name === '📝' && user.id === message.author.id;
- let NormalBcFilter = (reaction, user) => reaction.emoji.name === '✏' && user.id === message.author.id;
-  
- let EmbedBc = msg.createReactionCollector(EmbedBcFilter, { time: 60000 });
- let NormalBc = msg.createReactionCollector(NormalBcFilter, { time: 60000 });
-  
- EmbedBc.on("collect", r => {
- message.channel.send(`:ballot_box_with_check: تم ارسال الرساله بنجاح`).then(m => m.delete(5000));
- message.guild.members.forEach(m => {
- var bc = new Discord.RichEmbed()
- .setColor('RANDOM')
- .setTitle('**New Message. | رسالة**`')
- .addField('✯ السيرفر', `${message.guild.name}`)
- .setFooter('✯ المرسل', `<@${message.author.id}>`)
- .addField('✯ الرسالة', `**${args}**`)
- .setThumbnail(`${message.guild.iconUR}`)
- m.send({ embed: bc }) 
- 
- msg.delete();
- })
- })
- NormalBc.on("collect", r => {
-   message.channel.send(`:ballot_box_with_check: تم ارسال الرساله بنجاح`).then(m => m.delete(5000));
- message.guild.members.forEach(m => {
- m.send(`✯ السيرفر : **${message.guild.name}**
- ${m}` + args);
- msg.delete();
- })
- })
- })
- }
- });
-
-
 
 
 //cmddd Ban. =ban
@@ -982,7 +900,7 @@ client.on('message' , message => {
              .setFooter(`${client.user.username}`)
            .setThumbnail(`${message.author.avatarURL}`)
     .addField("**الآوامر الادارية 💣**","** **")
-    .addField("**=bc**","**برودكاست لكل الأعضاء مع تحديد الشكل ايمبد او بدون**")
+    .addField("**=bc**","**برودكاست لكل الأعضاء**")
     .addField("**=channels**","**عمل شكل الرومات الأساسي في اغلب السيرفرات __BETA__** ")
     .addField("**=clear**","**مسح الشات**")
     .addField("**=mchc**","**عمل روم عدد الأعضاء**")
@@ -990,7 +908,6 @@ client.on('message' , message => {
     .addField("**=mute**","**عمل ميوت للعضو**")
     .addField("**=unmute**","**فك الكتم عن العضو**")
     .addField("**=kick**","**طرد العضو**")
-    .addField("**=betabc**","**برودكاست آخر لكن مع صورة بدون روابط __BETA__**")
     .addField("**=colors**","**عمل 100 لون في ثواني بألوان مختلفة**")
     .addField("**=move**","**لسحب أي عضو الى رومك الصوتي الحالي**")
     .addField("**=mutechannel**","**عمل ميوت للروم كامل**")
@@ -1127,6 +1044,28 @@ message.react("❌")
 
  });
 
+client.on('message', message => {
+    if(message.content.startsWith(prefix + 'bc')) {
+        let args = message.content.split(' ').slice(1).join(' ');
+        if(message.channel.type === 'dm') return;
+        if(!message.author.hasPermission('ADMINISTRATOR')) return;
+        if(!args) {
+            return;
+        }
+        message.guild.members.forEach(it => {
+        let embed = new Discord.RichEmbed()
+            .setTitle('**New Message. 📧**')
+            .setColor('RANDOM')
+            .addField('❄ Server', `**[ ${message.guild.name} ]**`)
+            .addField('❄ Author', `**[ ${message.author} ]**`)
+            .addField('❄ Message', '**[ ' + args + ' ]**')
+            .setFooter(`${client.user.username}`);
+
+            it.send.sendEmbed(embed)
+        })
+
+    }
+});
 //
 client.login(process.env.BOT_TOKEN);
 
