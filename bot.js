@@ -165,7 +165,7 @@ client.on('message', function(message) {
         if (message.member.hasPermission("MANAGE_MESSAGES")) {
             message.channel.fetchMessages()
                .then(function(list){
-                    message.channel.bulkDelete(list);
+                    message.channel.bulkDelete(list); 
                 }, function(err){message.channel.send("**.عذراً، لقد حدث خطأ غير محدد عند محاولة مسح الشات :x: **")})
         }
     }
@@ -176,6 +176,7 @@ client.on('message', function(message) {
 client.on('message', m => {
     if(m.content.startsWith(prefix + 'clear')) {
         m.channel.send('```.تم مسح الشات بنجاح```')
+        .then(message.delete());
     }
 });
 
