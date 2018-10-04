@@ -625,7 +625,6 @@ client.on('message', message =>{
 client.on('message' , message => {
 
     if (message.content === "=inv") {
-        if(!message.channel.guild) return message.reply('**الآمر فقط في السيرفرات**')
      const embed = new Discord.RichEmbed()
  .setColor("RANDOM")
  .setThumbnail(client.user.avatarURL)
