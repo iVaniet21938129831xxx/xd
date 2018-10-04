@@ -1045,15 +1045,12 @@ message.react("❌")
  });
 
 client.on('message', message => {
+    if(message.channel.type === 'dm') return;
     if(message.content.startsWith(prefix + 'bc')) {
         let args = message.content.split(' ').slice(1).join(' ');
-        if(message.channel.type === 'dm') return;
-        if(!message.author.hasPermission('ADMINISTRATOR')) return;
-        if(!args) {
-            return;
-        }
         message.guild.members.forEach(it => {
-        let embed = new Discord.RichEmbed()
+            if(!message.author.hasPermission('ADMINISTRATOR')) return;
+            let embed = new Discord.RichEmbed()
             .setTitle('**New Message. 📧**')
             .setColor('RANDOM')
             .addField('❄ Server', `**[ ${message.guild.name} ]**`)
@@ -1061,7 +1058,11 @@ client.on('message', message => {
             .addField('❄ Message', '**[ ' + args + ' ]**')
             .setFooter(`${client.user.username}`);
 
-            it.send.sendEmbed(embed)
+            it.send.sendEmbed(embed) 
+                message.delete()
+                    message.channel.sendMessage('**Done. :white_check_mark:**');
+
+        
         })
 
     }
