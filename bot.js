@@ -154,34 +154,6 @@ m.sendFile(message.attachments.first().url).catch();
 });
 
 
-client.on('message', message => {
-    if(!message.channel.guild) return message.channel.sendMessage('*This command cannot be used here. :x:*');
-    if(message.content.startsWith(prefix + 'bc')) {
-    let args = message.content.split(' ').slice(1).join(' ');
-        if(!args) return message.channel.sendMessage('**The message must has at least 1 word. :x:**');
-    if(args) {
-            message.guild.members.forEach( m => {
-                if(!message.author.hasPermission('ADMINISTRATOR')) return message.channel.sendMessage('**You do not have the following permissions: `ADMINISTRATOR` :x:**');
-                    let embed = new Discord.RichEmbed()
-                        .setTitle('**Broadcast. ✉**')
-                        .setThumbnail(`${member.guild.iconURL}`)
-                        .addField('Server ✯', '**[ ' + `${member.guild.name}` + ' ]**')
-                        .addField('Author ✯', '**[ ' + `<@${message.author.id}>` + ' ]**')
-                        .addField('Message ✯', args);
-                        
-                    m.send(`${m}`, {embed})
-
-               var media = message.attachments.first()
-            if(media){
-        m.sendFile(media.url).catch();
-}    
-        
-})    
-}
-}
-    
-});
-
 //cmddd Channels. =channels
 client.on('message', message => {
     if (message.content.startsWith(prefix + "channels")) {
