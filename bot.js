@@ -176,7 +176,7 @@ client.on('message', function(message) {
 client.on('message', m => {
     if(m.content.startsWith(prefix + 'clear')) {
         m.channel.send('```.تم مسح الشات بنجاح```')
-            message.delete();
+            m.delete();
     }
 });
 
