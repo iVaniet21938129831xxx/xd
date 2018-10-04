@@ -1199,4 +1199,4 @@ message.react("❌")
  });
 
 //
-client.login('NDYxMTkxOTY4OTIwNDM2NzM4.Do1bRw.I__kfbezbv4fHZrky6nHgsRh40U');
+client.login(env.process.BOT_TOKEN);
