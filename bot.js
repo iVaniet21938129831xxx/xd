@@ -1071,6 +1071,30 @@ client.on('message', message => {
 
     }
 });
+
+//cmddd Broadcast. =bc
+client.on("message", message => {
+
+    if (message.content.startsWith(prefix + "bc")) {
+                 if (!message.member.hasPermission("ADMINISTRATOR"))  return;
+let args = message.content.split(" ").slice(1);
+var argresult = args.join(' '); 
+message.guild.members.filter(m => m.presence.status !== 'all').forEach(m => {
+let embed = new Discord.RichEmbed()
+.setTitle('**New Message. 📧**')
+.setColor('RANDOM')
+.addField('❄ Server', `**[ ${message.guild.name} ]**`)
+.addField('❄ Author', `**[ ${message.author} ]**`)
+.addField('❄ Message', '**[ ' + argresult + ' ]**')
+.setFooter(`${client.user.username}`);
+
+m.sendEmbed(embed);
+})
+message.channel.send(`**${message.guild.members.filter(m => m.presence.status !== 'all').size} : عدد الاعضاء المستلمين**`); 
+message.delete(2000); 
+};     
+});
+
 //
 client.login(process.env.BOT_TOKEN);
 
