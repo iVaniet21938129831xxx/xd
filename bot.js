@@ -1076,5 +1076,5 @@ message.delete();
 
 
 //
-client.login(env.process.BOT_TOKEN);
+client.login(process.env.BOT_TOKEN);
 
