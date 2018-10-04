@@ -172,11 +172,14 @@ client.on('message', function(message) {
 
 });
 
+
 // تكملهه,.
 client.on('message', m => {
     if(m.content.startsWith(prefix + 'clear')) {
         m.channel.send('```.تم مسح الشات بنجاح```')
-            m.delete();
+        .then(msg => {
+            msg.delete()
+          })
     }
 });
 
@@ -198,7 +201,7 @@ client.on("message", message => {
 
 // تكملهه.,
 client.on('message', msg => {
-    if(msg.content.startsWith(prefix + 'skin')) {
+    if(msg.content === prefix + 'skin') {
         msg.channel.send('**.ملاحظة :** ان لم يكن هناك احد بالاسم سيتم وضع سكن ستيف بدلأ عنه :seedling: ')
     }
 });
